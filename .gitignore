@@ -1,0 +1,10 @@
+node_modules/
+npm-debug.log*
+backend/.env
+frontend/.env
+frontend/build/
+Thumbs.db
+*.swp
+*.swo
+*~
+.vscode/
