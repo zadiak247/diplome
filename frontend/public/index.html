@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+  <meta charset="utf-8" />
+  <link rel="icon" type="image/png" href="/images/logo.png">
+  <link rel="manifest" href="/manifest.json" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#007bff" />
+  <meta name="description" content="Пилот Авто - ремонт и техническое обслуживание автотранспортных средств" />
+  <title>Пилот Авто</title>
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Пилот Авто" />
+  <meta property="og:description" content="Ремонт и ТО автомобилей" />
+  <meta property="og:image" content="/images/logo.png" />
+</head>
+  <body>
+    <div id="root"></div>
+  </body>
+  <script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('/sw.js');
+    });
+  }
+</script>
+</html>
