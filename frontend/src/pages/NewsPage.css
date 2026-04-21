@@ -1,0 +1,28 @@
+.landing-content {
+  padding-top: 120px;
+}
+
+.service-card-image {
+  width: 100%;
+  border-radius: 8px;
+  margin-bottom: 15px;
+}
+
+.news-main {
+  padding-top: 120px;
+}
+
+.news-loading-text {
+  padding: 50px;
+  text-align: center;
+}
+
+.news-small-date {
+  color: #6c757d;
+}
+
+.news-empty-message {
+  text-align: center;
+  color: #6c757d;
+  margin-top: 20vh;
+}
