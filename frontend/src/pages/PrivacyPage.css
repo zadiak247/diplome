@@ -1,0 +1,15 @@
+.privacy-main {
+  padding-top: 120px;
+  padding-bottom: 50px;
+}
+
+.privacy-content {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.privacy-last-update {
+  margin-top: 40px;
+  font-style: italic;
+  color: #666;
+}
