@@ -1,0 +1,102 @@
+.section-form {
+  background: white;
+  padding: 30px;
+  border-radius: 10px;
+}
+
+.section-form h2 {
+  margin-bottom: 20px;
+}
+
+.form-row {
+  margin-bottom: 20px;
+}
+
+.form-row label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.form-row input,
+.form-row textarea,
+.form-row select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ced4da;
+  border-radius: 5px;
+}
+
+.form-row textarea {
+  min-height: 150px;
+  resize: vertical;
+}
+
+.services-block {
+  border: 1px solid #ddd;
+  padding: 15px;
+  margin-bottom: 15px;
+  border-radius: 5px;
+}
+
+.services-block input,
+.services-block textarea {
+  margin-bottom: 10px;
+}
+
+.image-preview {
+  margin-top: 10px;
+  max-width: 200px;
+  max-height: 200px;
+}
+
+.buttons-row {
+  display: flex;
+  gap: 10px;
+  margin-top: 30px;
+}
+
+.cancel-btn {
+  background: #6c757d;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.cancel-btn:hover {
+  background: #5a6268;
+}
+
+.upload-input {
+  margin-top: 10px;
+}
+
+@media (max-width: 768px) {
+  .section-form {
+    padding: 20px;
+  }
+
+  .buttons-row {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .buttons-row .btn,
+  .buttons-row .cancel-btn {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .section-form h2 {
+    font-size: 1.3rem;
+  }
+
+  .services-block input,
+  .services-block textarea {
+    font-size: 0.9rem;
+  }
+}
