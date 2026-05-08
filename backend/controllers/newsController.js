@@ -50,6 +50,7 @@ exports.getNewsById = async (req, res) => {
 exports.createNews = async (req, res) => {
     try {
         const { title, content, image_url, is_published } = req.body;
+        if (!title) return res.status(400).json({ error: 'Заголовок обязателен' });
 
         const [result] = await db.execute(
             'INSERT INTO news (title, content, image_url, is_published, created_by) VALUES (?, ?, ?, ?, ?)',

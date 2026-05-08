@@ -161,7 +161,7 @@ exports.updateSectionOrder = async (req, res) => {
                 [newOrder, oldOrder]
             );
         } else {
-            await connection.commit();   
+            await connection.commit();
             return res.json({ message: 'Порядок не изменён' });
         }
 
@@ -170,7 +170,7 @@ exports.updateSectionOrder = async (req, res) => {
             [newOrder, req.userId, id]
         );
 
-
+        await connection.commit();
         res.json({ message: 'Порядок успешно обновлён' });
     } catch (error) {
         await connection.rollback();
