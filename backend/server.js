@@ -11,13 +11,7 @@ require('dotenv').config();
 const app = express();
 
 app.use(helmet({
-    contentSecurityPolicy: {
-        useDefaults: true,
-        directives: {
-            frameSrc: ["'self'", "https://yandex.ru", "https://*.yandex.ru"],
-            childSrc: ["'self'", "https://yandex.ru", "https://*.yandex.ru"]
-        }
-    },
+    contentSecurityPolicy: false,
     crossOriginResourcePolicy: { policy: "cross-origin" }
 }));
 app.use(compression());

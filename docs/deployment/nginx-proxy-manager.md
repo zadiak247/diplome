@@ -34,6 +34,7 @@ Create a new Proxy Host:
 - Cache Assets: optional
 - Block Common Exploits: enabled
 - Websockets Support: disabled
+- Do not add a custom Content-Security-Policy in the Advanced tab
 
 SSL tab:
 
@@ -44,3 +45,23 @@ SSL tab:
 The app serves the React build and API from the same origin. The frontend uses `/api`, so no separate API proxy host is needed.
 
 `172.30.0.20` is intentionally the private ZeroTier address, not the public IP. The container port is bound to that address so Nginx Proxy Manager can proxy over ZeroTier without exposing the app directly on all host interfaces.
+
+## Yandex map iframe
+
+The app does not emit a `Content-Security-Policy` header. If the browser console says:
+
+```text
+Framing 'https://yandex.ru/' violates the following Content Security Policy directive: "default-src 'self'".
+```
+
+then the CSP is coming from Nginx Proxy Manager or another nginx layer, not from the Node app. Remove that custom CSP header, or include at least:
+
+```nginx
+add_header Content-Security-Policy "default-src 'self'; frame-src 'self' https://yandex.ru https://*.yandex.ru; child-src 'self' https://yandex.ru https://*.yandex.ru;" always;
+```
+
+Verify the live header:
+
+```bash
+curl -I https://pilot-avto-sto.ru | grep -i content-security-policy
+```

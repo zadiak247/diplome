@@ -59,10 +59,18 @@ assertIncludes(envExample, 'JWT_SECRET=', '.env.example');
 const frontendApi = read('frontend/src/services/api.js');
 assertIncludes(frontendApi, "process.env.REACT_APP_API_URL || '/api'", 'frontend API client');
 
+const serviceWorker = read('frontend/public/sw.js');
+assertIncludes(serviceWorker, 'self.skipWaiting();', 'service worker');
+assertIncludes(serviceWorker, 'workbox.core.clientsClaim();', 'service worker');
+assertIncludes(
+  serviceWorker,
+  "request.mode === 'navigate' && url.origin === self.location.origin",
+  'service worker navigation route'
+);
+
 const server = read('backend/server.js');
-assertIncludes(server, 'frameSrc', 'backend helmet CSP');
-assertIncludes(server, 'https://yandex.ru', 'backend helmet CSP');
-assertIncludes(server, 'https://*.yandex.ru', 'backend helmet CSP');
+assertIncludes(server, 'contentSecurityPolicy: false', 'backend helmet config');
+assert.ok(!server.includes('frameSrc'), 'backend helmet config should not emit app CSP');
 
 const npmGuide = read('docs/deployment/nginx-proxy-manager.md');
 assertIncludes(npmGuide, 'pilot-avto-sto.ru', 'Nginx Proxy Manager guide');
@@ -70,5 +78,7 @@ assertIncludes(npmGuide, '172.30.0.20', 'Nginx Proxy Manager guide');
 assertIncludes(npmGuide, '5000', 'Nginx Proxy Manager guide');
 assertIncludes(npmGuide, 'Websockets Support: disabled', 'Nginx Proxy Manager guide');
 assertIncludes(npmGuide, 'Block Common Exploits: enabled', 'Nginx Proxy Manager guide');
+assertIncludes(npmGuide, 'Do not add a custom Content-Security-Policy', 'Nginx Proxy Manager guide');
+assertIncludes(npmGuide, "frame-src 'self' https://yandex.ru https://*.yandex.ru", 'Nginx Proxy Manager guide');
 
 console.log('Deployment configuration checks passed');

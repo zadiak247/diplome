@@ -1,6 +1,8 @@
 importScripts('https://storage.googleapis.com/workbox-cdn/releases/6.6.0/workbox-sw.js');
 
 workbox.setConfig({ debug: false });
+workbox.core.clientsClaim();
+self.skipWaiting();
 
 const { registerRoute } = workbox.routing;
 const { CacheFirst, StaleWhileRevalidate, NetworkFirst } = workbox.strategies;
@@ -47,7 +49,7 @@ registerRoute(
 );
 
 registerRoute(
-    ({ request }) => request.mode === 'navigate',
+    ({ request, url }) => request.mode === 'navigate' && url.origin === self.location.origin,
     new NetworkFirst({
         cacheName: 'pages',
         networkTimeoutSeconds: 3,
