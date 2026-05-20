@@ -59,6 +59,11 @@ assertIncludes(envExample, 'JWT_SECRET=', '.env.example');
 const frontendApi = read('frontend/src/services/api.js');
 assertIncludes(frontendApi, "process.env.REACT_APP_API_URL || '/api'", 'frontend API client');
 
+const server = read('backend/server.js');
+assertIncludes(server, 'frameSrc', 'backend helmet CSP');
+assertIncludes(server, 'https://yandex.ru', 'backend helmet CSP');
+assertIncludes(server, 'https://*.yandex.ru', 'backend helmet CSP');
+
 const npmGuide = read('docs/deployment/nginx-proxy-manager.md');
 assertIncludes(npmGuide, 'pilot-avto-sto.ru', 'Nginx Proxy Manager guide');
 assertIncludes(npmGuide, '172.30.0.20', 'Nginx Proxy Manager guide');
