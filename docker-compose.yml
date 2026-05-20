@@ -1,0 +1,52 @@
+services:
+  app:
+    container_name: pilot-avto-sto-app
+    build:
+      context: .
+      args:
+        REACT_APP_API_URL: ${REACT_APP_API_URL:-/api}
+    restart: unless-stopped
+    environment:
+      NODE_ENV: production
+      PORT: 5000
+      DB_HOST: mysql
+      DB_USER: ${DB_USER:-pilot_app}
+      DB_PASSWORD: ${DB_PASSWORD:?Set DB_PASSWORD in .env}
+      DB_NAME: ${DB_NAME:-pilot_avto_sto}
+      JWT_SECRET: ${JWT_SECRET:?Set JWT_SECRET in .env}
+      JWT_EXPIRES: ${JWT_EXPIRES:-7d}
+      CORS_ORIGIN: ${CORS_ORIGIN:-https://pilot-avto-sto.ru}
+      BASE_URL: ${BASE_URL:-https://pilot-avto-sto.ru}
+      UPLOAD_DIR: /app/backend/uploads
+    ports:
+      - "${APP_BIND_IP:-127.0.0.1}:${APP_PORT:-5000}:5000"
+    volumes:
+      - app-uploads:/app/backend/uploads
+    depends_on:
+      mysql:
+        condition: service_healthy
+
+  mysql:
+    image: mysql:8.4
+    container_name: pilot-avto-sto-mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: ${DB_NAME:-pilot_avto_sto}
+      MYSQL_USER: ${DB_USER:-pilot_app}
+      MYSQL_PASSWORD: ${DB_PASSWORD:?Set DB_PASSWORD in .env}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:?Set MYSQL_ROOT_PASSWORD in .env}
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+    volumes:
+      - mysql-data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h 127.0.0.1 -u$${MYSQL_USER} -p$${MYSQL_PASSWORD} --silent"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+
+volumes:
+  mysql-data:
+  app-uploads:
