@@ -2,6 +2,18 @@ importScripts('https://storage.googleapis.com/workbox-cdn/releases/6.6.0/workbox
 
 workbox.setConfig({ debug: false });
 
+self.addEventListener('install', () => {
+    self.skipWaiting();
+});
+
+self.addEventListener('activate', (event) => {
+    event.waitUntil(
+        caches.keys()
+            .then((keys) => Promise.all(keys.map((key) => caches.delete(key))))
+            .then(() => self.clients.claim())
+    );
+});
+
 const { registerRoute } = workbox.routing;
 const { CacheFirst, StaleWhileRevalidate, NetworkFirst } = workbox.strategies;
 const { ExpirationPlugin } = workbox.expiration;

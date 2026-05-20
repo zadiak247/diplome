@@ -19,7 +19,8 @@ services:
 
   backend:
     build:
-      context: ./backend
+      context: .
+      dockerfile: backend/Dockerfile
     restart: unless-stopped
     depends_on:
       mysql:
@@ -33,27 +34,14 @@ services:
       DB_NAME: diplome
       JWT_SECRET: change_me_in_production
       JWT_EXPIRES: 7d
-      CORS_ORIGIN: http://localhost:3000,http://172.25.1.99:3000
-      BASE_URL: http://localhost:5000
+      CORS_ORIGIN: https://pilot-avto-sto.ru,http://95.139.92.186:3000,http://172.25.1.99:3000
+      BASE_URL: https://pilot-avto-sto.ru
       UPLOAD_DIR: /app/uploads
+      CLIENT_BUILD_DIR: /app/frontend/build
     ports:
       - "5000:5000"
     volumes:
       - backend_uploads:/app/uploads
-
-  frontend:
-    build:
-      context: ./frontend
-    restart: unless-stopped
-    depends_on:
-      - backend
-    environment:
-      HOST: 0.0.0.0
-      PORT: 3000
-      WDS_SOCKET_PORT: 3000
-      REACT_APP_API_URL: http://localhost:5000/api
-    ports:
-      - "3000:3000"
 
 volumes:
   mysql_data:

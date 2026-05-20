@@ -42,8 +42,10 @@ const staticCacheConfig = (res, filePath) => {
     }
 };
 
+const clientBuildDir = process.env.CLIENT_BUILD_DIR || path.join(__dirname, '..', 'frontend', 'build');
+
 app.use(express.static(
-    path.join(__dirname, '..', 'frontend', 'build'),
+    clientBuildDir,
     { setHeaders: staticCacheConfig }
 ));
 
@@ -77,7 +79,7 @@ app.get('*', (req, res, next) => {
     if (req.path.startsWith('/api')) {
         return next();
     }
-    res.sendFile(path.join(__dirname, '..', 'frontend', 'build', 'index.html'));
+    res.sendFile(path.join(clientBuildDir, 'index.html'));
 });
 
 app.use((req, res) => res.status(404).json({ error: 'Не найдено' }));

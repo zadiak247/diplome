@@ -4,8 +4,9 @@ function buildCorsOrigin(value) {
         .map((origin) => origin.trim())
         .filter(Boolean);
 
-    return (origin) => !origin || origins.includes(origin);
+    return (origin, callback) => {
+        callback(null, !origin || origins.includes(origin));
+    };
 }
 
 module.exports = { buildCorsOrigin };
-
